@@ -1,4 +1,4 @@
-.container {
+.Container {
   display: flex;
   justify-content: center;
   align-items: center;
@@ -11,7 +11,7 @@
   z-index: 1000;
 }
 
-.loginBox {
+.LoginBox {
   color: #a6ce56;
   max-width: 527px;
   max-height: 523px;
@@ -19,7 +19,7 @@
   padding: 50px;
 }
 
-.teamWord {
+.TeamWord {
   font-family: Inter;
   font-style: normal;
   font-weight: 900;
@@ -30,7 +30,7 @@
   padding-left: 16%;
 }
 
-.worksWord {
+.WorksWord {
   font-family: Inter;
   font-style: normal;
   font-weight: 900;
@@ -40,39 +40,8 @@
   padding-right: 16%;
 }
 
-.error {
-  font-size: smaller;
-  color: #e32d2d;
-  padding: 10px;
-}
-
-.titleInput{
-  color: #a7e32d;
-  padding-top: 10px;
-  padding-bottom: 10px;
-}
-
-.inputLogin{
-  background: none;
-  border: 1px solid rgba(166, 206, 86, 0.8);
-  box-sizing: border-box;
-  width: 370px;
-  height: 52px;
-  padding: 15px;
-}
-
-.loginButton{
-  width: 370px;
-  height: 52px;
-  background: linear-gradient(91.13deg, #A6CE56 0%, #D1EF7C 100%);
-  border: 1px solid rgba(166, 206, 86, 0.8);
-  box-sizing: border-box;
-  margin-bottom: 25px;
-}
-
-.newTeam{
+.NewTeam {
   color: #a7e32d;
   padding-left: 28%;
-  padding-right:28.5%;
-  
+  padding-right: 28.5%;
 }
