@@ -13,6 +13,7 @@ import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.sun.istack.NotNull;
 import lombok.Getter;
 import lombok.Setter;
+
 @Getter
 @Setter
 @Entity
@@ -20,21 +21,23 @@ import lombok.Setter;
 public class Department extends BaseEntity {
 	@NotNull
 	@NotEmpty
-	@Column(name = "name",unique = true)
+	@Column(name = "name", unique = true)
 	private String name;
+
 	@NotNull
 	@NotEmpty
 	@Column(name = "description")
 	private String description;
-	
-	
+
 	@ManyToOne(optional = false)
 	@JoinColumn(name = "team_id")
 	@JsonBackReference
 	private Team team;
+
 	@Column(name = "projects")
 	@OneToMany(cascade = CascadeType.ALL, mappedBy = "department", orphanRemoval = true)
 	private List<Project> projects;
+
 	@OneToMany(cascade = CascadeType.ALL, mappedBy = "department", orphanRemoval = true)
 	private List<Belongs> belongs;
 }
