@@ -2,7 +2,6 @@ package org.springframework.samples.petclinic.web;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DataAccessException;
-import org.springframework.http.ResponseEntity;
 import org.springframework.samples.petclinic.model.UserTW;
 import org.springframework.samples.petclinic.service.TeamService;
 import org.springframework.samples.petclinic.service.UserTWService;
@@ -14,12 +13,10 @@ import org.springframework.web.bind.annotation.RestController;
 
 @RestController
 public class LoginController {
-	private final TeamService teamService;
 	private final UserTWService userTWService;
 	
 	@Autowired
 	public LoginController(TeamService teamService,UserTWService userTWService) {
-		this.teamService=teamService;
 		this.userTWService=userTWService;
 	}
 	

@@ -2,8 +2,6 @@ package org.springframework.samples.petclinic.web;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.stream.Collectors;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DataAccessException;
 import org.springframework.http.ResponseEntity;
@@ -33,25 +31,17 @@ public class ProjectController {
 	public void setAllowedFields(WebDataBinder dataBinder) {
 		dataBinder.setDisallowedFields("id");
 	}
-	@GetMapping(value = "/projects")
-	public List<Project> getProjects(@RequestParam(required = false) String name){
+	@GetMapping(value = "/api/projects")
+	public List<Project> getProjects(@RequestParam(required = false) Integer departmentId){
 		List<Project> l=new ArrayList<>();
-		if(name==null) {
-			l = projectService.getAllProjects().stream().collect(Collectors.toList());
-           
-		}
-		else {
-			l=projectService.getProjectsByName(name).stream().collect(Collectors.toList());
-			
-		}
+		l= departmentService.findDepartmentById(departmentId).getProjects();
 		return l;
 	}
-	@PostMapping(value = "/projects")
+	@PostMapping(value = "/api/projects")
 	public ResponseEntity<String> postProjects(@RequestParam(required = true) Integer departmentId,@RequestBody Project project) {
 		
 				try {
 					Department depar=departmentService.findDepartmentById(departmentId);
-					
 					project.setDepartment(depar);
 					projectService.saveProject(project);
 					return ResponseEntity.ok("Project create");
@@ -62,7 +52,7 @@ public class ProjectController {
 			
 	    
 	}
-	@DeleteMapping(value = "/projects")
+	@DeleteMapping(value = "/api/projects")
 	public ResponseEntity<String> deleteProjects(@RequestParam(required = true) Integer projectId) {
 		try {
 			projectService.deleteProjectById(projectId);

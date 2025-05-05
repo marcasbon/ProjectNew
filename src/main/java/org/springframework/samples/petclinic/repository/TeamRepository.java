@@ -19,7 +19,6 @@ public interface TeamRepository extends Repository<Team, Integer>{
     
     @Query("SELECT u FROM Team u WHERE u.name LIKE :name%")
     public Collection<Team> findByName(@Param("name") String name);
-
     
     public Collection<Team> findAll() throws DataAccessException;
 }
