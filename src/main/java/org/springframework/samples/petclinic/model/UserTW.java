@@ -15,7 +15,6 @@ import javax.validation.constraints.NotEmpty;
 import org.hibernate.annotations.CreationTimestamp;
 
 import com.fasterxml.jackson.annotation.JsonBackReference;
-import com.fasterxml.jackson.annotation.JsonManagedReference;
 import com.sun.istack.NotNull;
 
 import lombok.Getter;
@@ -43,8 +42,6 @@ public class UserTW extends BaseEntity {
 	@Column(name = "email", unique = true)
 	String email;
 
-	@Getter
-	@Setter
 	@NotNull
 	@NotEmpty
 	@Column(name = "password")
@@ -61,12 +58,11 @@ public class UserTW extends BaseEntity {
 
 	@ManyToOne(optional = false)
 	@JoinColumn(name = "team_id")
-	@JsonBackReference("team-user")
+	@JsonBackReference
 	private Team team;
-	@JsonManagedReference(value="user-belongs")
+
 	@OneToMany(cascade = CascadeType.ALL, mappedBy = "userTW", orphanRemoval = true)
 	private List<Belongs> belongs;
-	@JsonManagedReference(value="user-participation")
 	@OneToMany(cascade = CascadeType.ALL, mappedBy = "userTW", orphanRemoval = true)
 	private List<Participation> participation;
 }

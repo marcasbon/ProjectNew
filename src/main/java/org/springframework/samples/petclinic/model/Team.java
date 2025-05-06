@@ -9,7 +9,6 @@ import javax.persistence.OneToMany;
 import javax.persistence.Table;
 import javax.validation.constraints.NotEmpty;
 
-import com.fasterxml.jackson.annotation.JsonManagedReference;
 import com.sun.istack.NotNull;
 
 import lombok.Getter;
@@ -33,12 +32,11 @@ public class Team extends BaseEntity {
 	String identifier;
 
 	// Relaciones
-	@JsonManagedReference(value="team-user")
+
 	@Column(name = "users")
 	@OneToMany(cascade = CascadeType.ALL, mappedBy = "team", orphanRemoval = true)
 	private List<UserTW> users;
-	
-	@JsonManagedReference(value="team-department")
+
 	@Column(name = "departments")
 	@OneToMany(cascade = CascadeType.ALL, mappedBy = "team", orphanRemoval = true)
 	private List<Department> departments;

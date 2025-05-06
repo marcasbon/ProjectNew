@@ -13,7 +13,6 @@ import javax.persistence.Table;
 import javax.validation.constraints.NotEmpty;
 import org.hibernate.annotations.CreationTimestamp;
 import com.fasterxml.jackson.annotation.JsonBackReference;
-import com.fasterxml.jackson.annotation.JsonManagedReference;
 import com.sun.istack.NotNull;
 
 import lombok.Getter;
@@ -41,14 +40,12 @@ public class Project extends BaseEntity {
 
 	@ManyToOne(optional = false)
 	@JoinColumn(name = "department_id")
-	@JsonBackReference(value="department-project")
+	@JsonBackReference
 	private Department department;
-	
-	@JsonManagedReference(value="project-milestone")
+
 	@OneToMany(cascade = CascadeType.ALL, mappedBy = "project", orphanRemoval = true)
 	private List<Milestone> milestones;
-	
-	@JsonManagedReference(value="project-participation")
+
 	@OneToMany(cascade = CascadeType.ALL, mappedBy = "project", orphanRemoval = true)
 	private List<Participation> participation;
 }

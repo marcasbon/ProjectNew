@@ -13,7 +13,6 @@ import javax.persistence.Table;
 import javax.validation.constraints.NotEmpty;
 import org.springframework.format.annotation.DateTimeFormat;
 import com.fasterxml.jackson.annotation.JsonBackReference;
-import com.fasterxml.jackson.annotation.JsonManagedReference;
 import com.sun.istack.NotNull;
 import lombok.Getter;
 import lombok.Setter;
@@ -38,10 +37,9 @@ public class Milestone extends BaseEntity {
 
 	@ManyToOne(optional = false)
 	@JoinColumn(name = "projects_id")
-	@JsonBackReference(value="project-milestone")
+	@JsonBackReference
 	private Project project;
-	
-	@JsonManagedReference(value="milestone-toDo")
+
 	@Column(name = "toDos")
 	@OneToMany(cascade = CascadeType.ALL, mappedBy = "milestone", orphanRemoval = true)
 	private List<ToDo> toDos;
