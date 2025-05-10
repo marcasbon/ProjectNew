@@ -43,6 +43,8 @@ public class UserTW extends BaseEntity {
 	@Column(name = "email", unique = true)
 	String email;
 
+	@Getter
+	@Setter
 	@NotNull
 	@NotEmpty
 	@Column(name = "password")
@@ -67,4 +69,5 @@ public class UserTW extends BaseEntity {
 	@JsonManagedReference(value="user-participation")
 	@OneToMany(cascade = CascadeType.ALL, mappedBy = "userTW", orphanRemoval = true)
 	private List<Participation> participation;
+	
 }
