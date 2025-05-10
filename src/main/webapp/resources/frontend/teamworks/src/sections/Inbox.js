@@ -48,13 +48,13 @@ const Inbox = (props) => {
     },
   ]);
 
-  const [modalNewMessage, setModalNewMessage] = useState(false);
+  const [modalNewMessage, setModalNewMessage] = useState("False");
 
   return (
     <div className="Content">
       <InboxSidebar modalNewMessage = {modalNewMessage} setModalNewMessage= {setModalNewMessage}/>
       <Section className="Section--Lighter">
-        {modalNewMessage && <NewMessage ChangeModalNewMessage={()=> setModalNewMessage(!modalNewMessage)}/>}
+        {modalNewMessage && <NewMessage/>}
         <MessageList messages={messages} />
       </Section>
     </div>

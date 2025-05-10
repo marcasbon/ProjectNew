@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import Sidebar from "./Sidebar";
 import Inboxes from "../inboxes/Inboxes";
 import ProjectPicker from "../projects/ProjectPicker";
@@ -8,24 +8,41 @@ import GradientButton from "../buttons/GradientButton";
 import SidebarSection from "./SidebarSection";
 import NewMessage from "../messages/NewMessage";
 
-const InboxSidebar = ({setModalNewMessage, modalNewMessage}) => {
+const InboxSidebar = ({ setModalNewMessage, modalNewMessage }) => {
+  const [selectedTab, setSelectedTab] = useState("Inbox");
+  const [pickedProject, setPickedProject] = useState({
+    title: "TeamWorks1",
+    id:"1",
+    tagList: [
+      { title: "Planning", color: "#FFD703", noOpenedMessages: 25 },
+      { title: "Cleaning", color: "#DDFFDD", noOpenedMessages: 12 },
+      { title: "MockUp", color: "#AAD7F3", noOpenedMessages: 43 },
+    ]
+  });
 
-  const ChangeModalNewMessage = () =>{
-    setModalNewMessage(!modalNewMessage) /*&& document.getElementById('ModalBackground').style.filter == 'blur(5px)';*/
-  }
+  const ChangeModalNewMessage = () => {
+    setModalNewMessage(!modalNewMessage);
+  };
 
   return (
     <Sidebar>
-      <GradientButton /*onClick={props.createNewMessage}*/ onClick={ChangeModalNewMessage} className="MainButton">
-        NEW MESSAGE
+      <GradientButton onClick={ChangeModalNewMessage} className="MainButton">
+        New message
       </GradientButton>
 
       <hr className="Separator" />
 
-      <Inboxes />
-      <ProjectPicker />
-      <ProjectTags />
-      <MyProjectToDos />
+      <Inboxes selectedTab={selectedTab} setSelectedTab={setSelectedTab} />
+      <ProjectPicker
+        pickedProject={pickedProject}
+        setPickedProject={setPickedProject}
+      />
+      <ProjectTags
+        tagList={pickedProject.tagList}
+        selectedTab={selectedTab}
+        setSelectedTab={setSelectedTab}
+      />
+      <MyProjectToDos projectId={pickedProject.id} />
     </Sidebar>
   );
 };
