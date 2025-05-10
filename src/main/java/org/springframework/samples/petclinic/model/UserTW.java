@@ -42,6 +42,8 @@ public class UserTW extends BaseEntity {
 	@Column(name = "email", unique = true)
 	String email;
 
+	@Getter
+	@Setter
 	@NotNull
 	@NotEmpty
 	@Column(name = "password")

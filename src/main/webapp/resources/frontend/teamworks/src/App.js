@@ -8,39 +8,28 @@ import AuthApiUtils from "./utils/api/AuthApiUtils";
 function App()
 {
   const [isLoggedIn, setIsLoggedIn] = useState(false);
-  const [hasLoaded, setHasLoaded] = useState(false);
-
+  
+  // TODO: Loading state to prevent flicker
+  
   useEffect(() =>
   {
-    if (!isLoggedIn && !hasLoaded)
+    if (!isLoggedIn)
     {
       AuthApiUtils.islogged()
-        .then(() =>
-        {
-          setIsLoggedIn(true);
-          setHasLoaded(true);
-        })
-        .catch(() =>
-        {
-          setIsLoggedIn(false);
-          setHasLoaded(true);
-        });
+      .then(() => setIsLoggedIn(true))
+      .catch(() => setIsLoggedIn(false));
     }
   });
 
   let page;
-  if (hasLoaded)
+  if (isLoggedIn)
   {
-    if (isLoggedIn)
-    {
-      page = <MainPage onLoginChanged={setIsLoggedIn} />;
-    }
-    else
-    {
-      page = <LoginPage onLoginChanged={setIsLoggedIn} />;
-    }
+    page = <MainPage onLoginChanged={setIsLoggedIn} />;
   }
-
+  else
+  {
+    page = <LoginPage onLoginChanged={setIsLoggedIn} />;
+  }
 
   return (
     <div className="App">

@@ -1,23 +1,30 @@
 import React, { useState } from "react";
-import "./App.css";
-import Header from "./components/header/Header";
-import Settings from "./sections/Settings";
-import Inbox from "./sections/Inbox";
-import { BrowserRouter as Router, Switch, Route, Link } from "react-router-dom";
+import './App.css';
+import Header from './components/header/Header';
+import Settings from './sections/Settings';
+import
+{
+  BrowserRouter as Router,
+  Switch,
+  Route,
+  Link
+} from "react-router-dom";
+import LoginPage from "./components/Auth/LoginPage";
 import "./sections/Section.css";
 
-const MainPage = () => {
+const MainPage = (props) =>
+{
+  
   return (
     <Router>
       <Switch>
-        <Route exact path="/">
+        <Route path="/settings">
           <div className="App">
             <Header />
-            <Inbox />
+            <Settings />
           </div>
         </Route>
-
-        <Route path="/settings">
+        <Route path="/">
           <div className="App">
             <Header />
             <Settings />
@@ -26,6 +33,6 @@ const MainPage = () => {
       </Switch>
     </Router>
   );
-};
+}
 
 export default MainPage;
