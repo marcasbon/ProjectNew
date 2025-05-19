@@ -40,16 +40,11 @@ public class Message extends BaseEntity {
 	@Column(name = "text")
 	private String text;
 	
-	@Column(name = "read")
-	private Boolean read;
-	
 	
 	//Relations
-	/*
 	@Column(name = "attatchment")
 	@OneToMany(cascade = CascadeType.ALL, mappedBy = "message", orphanRemoval = true)
 	private List<Attatchment> attatchments;
-	*/
 	
 	@ManyToOne(optional = false)
     @JoinColumn(name = "message")
@@ -57,13 +52,13 @@ public class Message extends BaseEntity {
     private Message reply;
 	
 	@ManyToOne(optional = false)
-    @JoinColumn(name = "user_idsender")
-    @JsonBackReference(value = "message-sender")
+    @JoinColumn(name = "user_id")
+    @JsonBackReference
     private UserTW sender;
 	
 	@ManyToOne(optional = false)
-    @JoinColumn(name = "user_idrecipient")
-    @JsonBackReference(value = "message-recipient")
+    @JoinColumn(name = "user_id")
+    @JsonBackReference
     private UserTW recipient;
 	
 	@ManyToOne(optional = true)
