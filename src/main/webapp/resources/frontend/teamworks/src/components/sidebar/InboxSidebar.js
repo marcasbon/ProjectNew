@@ -1,53 +1,31 @@
-import React, { useState } from "react";
+import React from "react";
 import Sidebar from "./Sidebar";
 import Inboxes from "../inboxes/Inboxes";
 import ProjectPicker from "../projects/ProjectPicker";
 import MyProjectToDos from "../projects/toDos/MyProjectToDos";
 import ProjectTags from "../projects/tags/ProjectTags";
 import GradientButton from "../buttons/GradientButton";
+import SidebarSection from "./SidebarSection";
+import NewMessage from "../messages/NewMessage";
 
-const InboxSidebar = ({
-  numberOfInboxMessages,
-  numberOfSentMessages,
-  selectedTab,
-  setSelectedTab,
-  setModalNewMessage,
-  modalNewMessage,
-}) => {
-  const [pickedProject, setPickedProject] = useState({
-    name: "Pick a project",
-    id: null,
-    tags: [
-    ]});
+const InboxSidebar = ({setModalNewMessage, modalNewMessage}) => {
 
-  const ChangeModalNewMessage = () => {
-    setModalNewMessage(!modalNewMessage);
-  };
+  const ChangeModalNewMessage = () =>{
+    setModalNewMessage(!modalNewMessage) /*&& document.getElementById('ModalBackground').style.filter == 'blur(5px)';*/
+  }
 
   return (
     <Sidebar>
-      <GradientButton onClick={ChangeModalNewMessage} className="MainButton">
-        New message
+      <GradientButton /*onClick={props.createNewMessage}*/ onClick={ChangeModalNewMessage} className="MainButton">
+        NEW MESSAGE
       </GradientButton>
 
       <hr className="Separator" />
 
-      <Inboxes
-        numberOfInboxMessages={numberOfInboxMessages}
-        numberOfSentMessages={numberOfSentMessages}
-        selectedTab={selectedTab}
-        setSelectedTab={setSelectedTab}
-      />
-      <ProjectPicker
-        pickedProject={pickedProject}
-        setPickedProject={setPickedProject}
-      />
-      <ProjectTags
-        tagList={pickedProject.tags}
-        selectedTab={selectedTab}
-        setSelectedTab={setSelectedTab}
-      />
-      <MyProjectToDos projectId={pickedProject.id} />
+      <Inboxes />
+      <ProjectPicker />
+      <ProjectTags />
+      <MyProjectToDos />
     </Sidebar>
   );
 };
