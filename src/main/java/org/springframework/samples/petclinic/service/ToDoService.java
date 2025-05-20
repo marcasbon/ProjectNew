@@ -33,10 +33,9 @@ public class ToDoService {
     public void deleteToDoById(Integer toDoId) throws DataAccessException {
         toDoRepository.deleteById(toDoId);
     }
-
     @Transactional(readOnly = true)
-    public Collection<ToDo> findToDoByMilestoneAndUser(Integer milestoneId, Integer userId) {
-        return toDoRepository.findToDoByMilestoneAndUser(milestoneId, userId);
+    public Collection<ToDo> findToDoByMilestoneAndUser(Integer milestoneId,Integer userId) {
+    	return toDoRepository.findToDoByMilestoneAndUser(milestoneId, userId);
     }
 
 }

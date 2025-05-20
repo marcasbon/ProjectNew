@@ -11,7 +11,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DataAccessException;
 import org.springframework.data.repository.query.Param;
 import org.springframework.http.ResponseEntity;
-import org.springframework.samples.petclinic.model.Belongs;
 import org.springframework.samples.petclinic.model.Department;
 import org.springframework.samples.petclinic.model.Participation;
 import org.springframework.samples.petclinic.model.Project;
@@ -86,16 +85,15 @@ public class ProjectController {
 
 	}
 
-	// TODO: discutir departmentID (INTERCEPTOR)
 	@DeleteMapping(value = "/api/projects")
-	public ResponseEntity<String> deleteProjects(@RequestParam(required = true) Integer departmentId,
-			@RequestParam(required = true) Integer projectId) {
+	public ResponseEntity<String> deleteProjects(@RequestParam(required = true) Integer projectId) {
 		try {
 			projectService.deleteProjectById(projectId);
 			return ResponseEntity.ok("Project delete");
 		} catch (DataAccessException d) {
 			return ResponseEntity.notFound().build();
 		}
+
 	}
 
 	@PostMapping(value = "/api/projects/participation")
@@ -104,15 +102,16 @@ public class ProjectController {
 			HttpServletRequest r) {
 
 		try {
+
 			Participation currentParticipation = participationService.findCurrentParticipation(participationUserId,
 					projectId);
 			UserTW user = userTWService.findUserById((Integer) r.getSession().getAttribute("userId"));
 			Project project = projectService.findProjectById(projectId);
-			Belongs belongs = belongsService.findCurrentBelongs(user.getId(), project.getDepartment().getId());
-			Boolean isTeamOwner = user.getRole().equals(Role.team_owner);
-
+			Boolean isDepartmentManager = belongsService
+					.findCurrentBelongs(user.getId(), project.getDepartment().getId()).getIsDepartmentManager();
+			Boolean teamOwner = user.getRole().equals(Role.team_owner);
 			// Comprueba si existe una participacion
-			if (currentParticipation == null && belongs != null) {
+			if (currentParticipation == null) {
 				UserTW participationUser = userTWService.findUserById(participationUserId);
 				Participation participation = new Participation();
 				participation.setProject(project);
@@ -120,7 +119,7 @@ public class ProjectController {
 				participation.setIsProjectManager(false);
 				// Solo puedes asignar el rol de project manager si eres teamOwner o
 				// departmentManager
-				if (isProjectManager != null && (belongs.getIsDepartmentManager() || isTeamOwner)) {
+				if (isProjectManager != null && (isDepartmentManager || teamOwner)) {
 					participation.setIsProjectManager(isProjectManager);
 				}
 				participationService.saveParticipation(participation);
@@ -143,10 +142,9 @@ public class ProjectController {
 			Project project = participation.getProject();
 			Boolean isDepartmentManager = belongsService
 					.findCurrentBelongs(user.getId(), project.getDepartment().getId()).getIsDepartmentManager();
-			Boolean isTeamOwner = user.getRole().equals(Role.team_owner);
+			Boolean teamOwner = user.getRole().equals(Role.team_owner);
 			Boolean isProjectManager = participation.getIsProjectManager();
-
-			if (isProjectManager == false || (isDepartmentManager || isTeamOwner)) {
+			if (isProjectManager == false || (isDepartmentManager || teamOwner)) {
 				participation.setFinalDate(LocalDate.now());
 				participationService.saveParticipation(participation);
 				return ResponseEntity.ok("Participation delete");
@@ -154,7 +152,7 @@ public class ProjectController {
 				return ResponseEntity.status(403).build();
 			}
 
-		} catch (Exception e) {
+		} catch (DataAccessException d) {
 			return ResponseEntity.notFound().build();
 		}
 

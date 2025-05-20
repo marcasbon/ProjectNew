@@ -54,6 +54,7 @@ public class MilestoneService {
 		return milestoneRepository.findById(milestoneId);
 	}
 
+
 	@Transactional
 	public void deleteMilestonetById(Integer milestoneId) throws DataAccessException {
 		milestoneRepository.deleteById(milestoneId);
@@ -65,12 +66,10 @@ public class MilestoneService {
 	public Collection<Milestone> getAllMilestone() throws DataAccessException {
 		return milestoneRepository.findAll();
 	}
-
 	@Transactional(readOnly = true)
 	public Milestone findNextMilestone(Integer projectId) throws DataAccessException {
-		return milestoneRepository.findNextMilestone(projectId).stream()
-				.filter(x -> x.getDueFor().isBefore(LocalDate.now())).sorted(Comparator.comparing(x -> x.getDueFor()))
-				.sorted(Collections.reverseOrder()).findFirst().get();
+		return milestoneRepository.findNextMilestone(projectId).stream().filter(x->x.getDueFor().isBefore(LocalDate.now())).sorted(Comparator.comparing(x->x.getDueFor())).sorted(Collections.reverseOrder()).findFirst().get();
 	}
+	
 
 }

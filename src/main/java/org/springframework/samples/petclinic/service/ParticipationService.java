@@ -1,5 +1,4 @@
 package org.springframework.samples.petclinic.service;
-
 import java.util.Collection;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -28,29 +27,25 @@ public class ParticipationService {
 	public void deleteParticipationById(Integer participationId) throws DataAccessException {
 		participationRepository.deleteById(participationId);
 	}
-
 	@Transactional(readOnly = true)
 	public Participation findParticipationById(Integer participationId) throws DataAccessException {
 		return participationRepository.findById(participationId);
 	}
-
 	@Transactional(readOnly = true)
 	public Collection<Participation> findParticipationByUserIdAndProjectId(Integer userId, Integer projectId) {
 		return participationRepository.findParticipationByUserAndDeparment(userId, projectId);
 	}
-
+	
 	@Transactional(readOnly = true)
 	public Participation findCurrentParticipation(Integer userId, Integer projectId) {
 		return participationRepository.findCurrentParticipation(userId, projectId);
 	}
-
 	@Transactional(readOnly = true)
-	public Collection<Project> findMyProjects(Integer userId) {
+	public Collection<Project> findMyProjects(Integer userId){
 		return participationRepository.findMyProjects(userId);
 	}
-
 	@Transactional(readOnly = true)
-	public Collection<Project> findMyDepartemntProjects(Integer userId, Integer departmentId) {
-		return participationRepository.findMyDepartemntProjects(userId, departmentId);
+	public Collection<Project> findMyDepartemntProjects(Integer userId,Integer departmentId){
+		return participationRepository.findMyDepartemntProjects(userId,departmentId);
 	}
 }

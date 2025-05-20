@@ -37,24 +37,23 @@ public class Tag extends BaseEntity {
     String color;
 
     // Relations
-
+    
     @ManyToOne(optional = false)
     @JoinColumn(name = "projects_id")
-    @JsonBackReference(value = "project-tag")
-    private Project project;
-
     @JsonIgnore
-    // @JsonBackReference(value="milestone-tag")
+   // @JsonBackReference(value="project-tag")
+    private Project project;
+    
+    @JsonIgnore
+    //@JsonBackReference(value="milestone-tag")
     @ManyToMany
     private List<Milestone> milestones;
-
-    @JsonIgnore
-    // @JsonBackReference(value = "toDo-tag")
+    
+    
+    @JsonBackReference(value="toDo-tag")
     @ManyToMany
     private List<ToDo> toDos;
 
-    @JsonIgnore
-    @ManyToMany
-    private List<Message> messages;
+    // TODO: Message Relation
 
 }

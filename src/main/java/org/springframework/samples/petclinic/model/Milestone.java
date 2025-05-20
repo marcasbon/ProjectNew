@@ -39,7 +39,7 @@ public class Milestone extends BaseEntity {
 	private LocalDate dueFor;
 
 	@ManyToOne(optional = false)
-	@JoinColumn(name = "projectId")
+	@JoinColumn(name = "projects_id")
 	@JsonIgnore
 	//@JsonBackReference(value="project-milestone")
 	private Project project;

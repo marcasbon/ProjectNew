@@ -25,7 +25,7 @@ import lombok.Setter;
 @Getter
 @Setter
 @Entity
-@Table(name = "users")
+@Table(name = "userTW")
 
 public class UserTW extends BaseEntity {
 
@@ -44,6 +44,7 @@ public class UserTW extends BaseEntity {
 	@Column(name = "email", unique = true)
 	String email;
 
+	
 	@NotNull
 	@NotEmpty
 	@Column(name = "password")
@@ -61,16 +62,16 @@ public class UserTW extends BaseEntity {
 	@ManyToOne(optional = false)
 	@JoinColumn(name = "team_id")
 	@JsonIgnore
-	// @JsonBackReference("team-user")
+	//@JsonBackReference("team-user")
 	private Team team;
-
+	
 	@JsonIgnore
-	// @JsonManagedReference(value="user-belongs")
+	//@JsonManagedReference(value="user-belongs")
 	@OneToMany(cascade = CascadeType.ALL, mappedBy = "userTW", orphanRemoval = true)
 	private List<Belongs> belongs;
-
+	
 	@JsonIgnore
-	// @JsonManagedReference(value="user-participation")
+	//@JsonManagedReference(value="user-participation")
 	@OneToMany(cascade = CascadeType.ALL, mappedBy = "userTW", orphanRemoval = true)
 	private List<Participation> participation;
 }
